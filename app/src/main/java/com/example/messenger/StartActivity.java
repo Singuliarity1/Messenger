@@ -21,6 +21,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
         switch(v.getId()){
             case R.id.messaging:
                 Intent intent=new Intent(this,MessageActivity.class);
+                intent.putExtra("id_user",12);
                 startActivity(intent);
                 break;
         }

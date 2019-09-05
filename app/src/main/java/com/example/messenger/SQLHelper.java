@@ -8,7 +8,7 @@ import android.util.Log;
 public class SQLHelper extends SQLiteOpenHelper {
 
     public SQLHelper(Context ctx){
-        super(ctx,"messages",null,1);
+        super(ctx,"messages_test",null,1);
     }
 
     @Override

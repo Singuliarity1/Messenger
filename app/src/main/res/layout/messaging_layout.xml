@@ -30,6 +30,7 @@
         app:layout_constraintStart_toEndOf="@+id/message" />
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="395dp"
         android:layout_height="659dp"
         android:orientation="vertical"
