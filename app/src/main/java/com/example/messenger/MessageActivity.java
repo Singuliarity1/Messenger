@@ -23,6 +23,7 @@ public class MessageActivity extends Activity implements View.OnClickListener {
     LinearLayout ll;
     Intent intent;
     int id_user;
+    SoundMaker sound;
     @Override
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
@@ -38,6 +39,7 @@ public class MessageActivity extends Activity implements View.OnClickListener {
         id_user=(int) intent.getIntExtra("id_user",0);
         loadAllMessage(db);
         Log.d("id_user",String.valueOf(id_user));
+        sound=new SoundMaker(this);
     }
 
     @Override
@@ -58,6 +60,7 @@ public class MessageActivity extends Activity implements View.OnClickListener {
             cv.put("message", message);
             db.insert("messages", null, cv);
             addMessage(message);
+
         }
     }
     private void loadAllMessage(SQLiteDatabase db){
@@ -71,6 +74,7 @@ public class MessageActivity extends Activity implements View.OnClickListener {
         }
     }
     private void addMessage(String message){
+        sound.sendMessage();
         et.setText("");
         TextView tv =new TextView(this);
         tv.setText(message);
