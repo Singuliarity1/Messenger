@@ -1,36 +1,36 @@
 package com.example.messenger;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.ServerSocket;
+import java.io.*;
 import java.net.Socket;
 
-public class SocketClient extends Thread {
-    private boolean run=false;
+public class SocketClient extends AsyncTask<Void,Void,Void> {
+
     private Socket client;
     private BufferedReader out;
-    private BufferedWriter in;
-    public SocketClient(){
+    private DataOutputStream  in;
 
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+        this.runListenServer();
+        return null;
     }
+
     private void runListenServer(){
         try{
-            client=new Socket("15.188.58.119",5189);
-            while(true){
-
-            }
+            byte[] b={12,45,35};
+            client=new Socket("15.188.58.119",5891);
+            client.getOutputStream().write(b);
+            client.getOutputStream().flush();
+            Log.d("SERVER",String.valueOf("client connected"));
         }catch(Exception e){
             Log.d("ERROR SERVER",String.valueOf(e));
         }
     }
-    @Override
-    public void run(){
-        super.run();
-    }
+
 
     public String getServerData(){
         String answer="";
@@ -46,9 +46,11 @@ public class SocketClient extends Thread {
 
     public void setServerData(String text){
         try {
-            in = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
-            in.write(text+'\n');
+            in = new DataOutputStream (client.getOutputStream());
+            in.writeUTF(text);
             in.flush();
+
+            Log.d("SERVER","Message send");
         }catch(Exception e){
             Log.d("ERROR send on server",String.valueOf(e));
         }

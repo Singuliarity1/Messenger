@@ -24,6 +24,8 @@ public class MessageActivity extends Activity implements View.OnClickListener {
     Intent intent;
     int id_user;
     SoundMaker sound;
+    SocketClient client;
+    MessageHelper msg;
     @Override
     protected void onCreate(Bundle bundle){
         super.onCreate(bundle);
@@ -34,12 +36,14 @@ public class MessageActivity extends Activity implements View.OnClickListener {
         ll=(LinearLayout) findViewById(R.id.layout);
         btn.setOnClickListener(this);
         db=sql.getWritableDatabase();
-
+        client=new SocketClient();
+        client.execute();
         intent=getIntent();
         id_user=(int) intent.getIntExtra("id_user",0);
         loadAllMessage(db);
         Log.d("id_user",String.valueOf(id_user));
         sound=new SoundMaker(this);
+        msg.showMessage(this,"Message Activity");
     }
 
     @Override
@@ -59,6 +63,8 @@ public class MessageActivity extends Activity implements View.OnClickListener {
             cv.put("id_user", id_user);
             cv.put("message", message);
             db.insert("messages", null, cv);
+            client.setServerData(message);
+
             addMessage(message);
 
         }

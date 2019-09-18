@@ -12,8 +12,8 @@ public class SoundMaker {
     }
 
     public void sendMessage(){
-        this.mp=MediaPlayer.create(ctx,R.raw.send_message);
-        this.mp.start();
+        mp=MediaPlayer.create(ctx,R.raw.send_message);
+        mp.start();
         Log.d("SOUND","PLAY");
     }
 }
