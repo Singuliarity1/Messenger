@@ -44,6 +44,7 @@ public class MessageActivity extends Activity implements View.OnClickListener {
         Log.d("id_user",String.valueOf(id_user));
         sound=new SoundMaker(this);
         msg.showMessage(this,"Message Activity");
+        sound.sendMessage();
     }
 
     @Override

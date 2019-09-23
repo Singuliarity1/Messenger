@@ -3,12 +3,14 @@ package com.example.messenger;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button start,reg,exit;
     Intent intent;
+    SoundMaker sound;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         start.setOnClickListener(this);
         reg.setOnClickListener(this);
         exit.setOnClickListener(this);
+        sound=new SoundMaker(this);
+        sound.start();
+        Log.d("STATUS","START");
     }
 
 
@@ -26,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.start:
-                intent=new Intent(this,MessageActivity.class);
+                intent=new Intent(this,SoundRecord.class);
 
                 break;
             case R.id.registration:
