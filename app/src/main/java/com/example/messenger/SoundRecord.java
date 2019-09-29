@@ -1,7 +1,9 @@
 package com.example.messenger;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +47,13 @@ public class SoundRecord extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.record:
+                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)!= PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.RECORD_AUDIO},0);
+                }
+
+                if(ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+                }
                 record();
                 break;
 
@@ -59,23 +69,26 @@ public class SoundRecord extends Activity implements View.OnClickListener {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void record(){
-        fileName= Environment.getExternalStorageDirectory()+"/"+randomFileName(10)+".3gpp";
+
+
+        fileName= this.getFilesDir()+"/"+randomFileName(5)+".3gpp";
         File file=new File(fileName);
-       while(file.exists()){
-            file.renameTo(new File(getCopyFileName(fileName)));
+        while(file.exists()){
+           file.renameTo(new File(getCopyFileName(fileName)));
         }
        try {
            mr = new MediaRecorder();
            mr.setAudioSource(MediaRecorder.AudioSource.MIC);
            mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
            mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-           mr.setOutputFile(file);
+           mr.setOutputFile(fileName);
            mr.prepare();
            mr.start();
        }catch(IOException e){
            Log.d("ERROR RECORD",String.valueOf(e));
-           MessageHelper.showMessage(this,"ERROR RECORD");
+
        }
+        MessageHelper.showMessage(this,fileName);
     }
     private String getCopyFileName(String filaname){
         String newFileName="";
