@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class SurfacePaint extends SurfaceView implements SurfaceHolder.Callback {
+public class SurfacePaint extends SurfaceView implements SurfaceHolder.Callback, TouchConnect {
 
     Context ctx;
     PaintMessenger paint;
@@ -28,5 +28,10 @@ public class SurfacePaint extends SurfaceView implements SurfaceHolder.Callback 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
+    }
+
+    @Override
+    public void setCoordinates(int x, int y) {
+        paint.setCoordinates(x,y);
     }
 }

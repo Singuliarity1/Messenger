@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.start:
-                intent=new Intent(this,SoundRecord.class);
+                intent=new Intent(this,PaintActivity.class);
 
                 break;
             case R.id.registration:
