@@ -1,5 +1,7 @@
 package com.example.messenger;
 
+import android.graphics.Canvas;
+
 public interface GUIEvent {
-    public void event(int x,int y, int width,int height);
+    void event(int x, int y, int width, int height, Canvas c);
 }
